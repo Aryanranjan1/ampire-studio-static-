@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMpire Studio | Page Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js">
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#6366f1',
+                            dark: '#818cf8'
+                        },
+                        secondary: {
+                            light: '#f43f5e',
+                            dark: '#fb7185'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(90deg, #6366f1, #f43f5e);
+        }
+        
+        .dark .gradient-text {
+            background-image: linear-gradient(90deg, #818cf8, #fb7185);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .service-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.05);
+        }
+        
+        .process-step::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: #e5e7eb;
+            left: 24px;
+            top: 40px;
+            z-index: 0;
+        }
+        
+        .dark .process-step::before {
+            background: #4b5563;
+        }
+        
+        @media (max-width: 768px) {
+            .process-step::before {
+                display: none;
+            }
+        }
+        
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .portfolio-item {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .portfolio-overlay {
+            transition: all 0.3s ease;
+            opacity: 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .dark .portfolio-overlay {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+
+    <header class="fixed w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/index.html" class="flex items-center">
+                    <span class="text-2xl font-bold gradient-text">AMpire</span>
+                    <span class="ml-1 text-xl font-semibold dark:text-white">Studio</span>
+                </a>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="/index.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Home</a>
+                <a href="/services.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Services</a>
+                <a href="/about-us.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">About Us</a>
+                <a href="/portfolio.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Portfolio</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+                <a href="/contact.html" class="hidden md:block bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-md hover:opacity-90 transition font-medium">
+                    Get Started
+                </a>
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg rounded-b-lg">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/index.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Home</a>
+                <a href="/services.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Services</a>
+                <a href="/about-us.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">About Us</a>
+                <a href="/portfolio.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Portfolio</a>
+                <a href="/contact.html" class="bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-md hover:opacity-90 transition font-medium text-center">
+                    Get Started
+                </a>
+            </div>
+        </div>
+    </header>
+    <main>
+         <section id="service-hero" class="bg-gray-50 dark:bg-gray-800 pt-32 pb-16 md:pt-40 md:pb-20 text-center">
+        <div class="container mx-auto px-4">
+            <span class="font-semibold text-primary-light dark:text-primary-dark">OUR SERVICES</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mt-2">Website Design & Development</h1>
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-300">
+                We build high-performance, visually stunning websites that act as the digital cornerstone for your brand.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Modern web design on a laptop" class="rounded-lg shadow-lg w-full h-auto">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">More Than a Website, It's a Digital Experience.</h2>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        In today's digital-first world, your website is often the first interaction a customer has with your business. It's your 24/7 salesperson, your brand ambassador, and your primary lead generation tool. We don't just build pages; we build strategic assets designed to attract, engage, and convert your target audience.
+                    </p>
+                    <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                        <li class="flex items-start"><i class="fas fa-check-circle text-primary-light dark:text-primary-dark mt-1 mr-2"></i><span>Designs that are both beautiful and intuitive.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-primary-light dark:text-primary-dark mt-1 mr-2"></i><span>Performance-optimized for speed and reliability.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-primary-light dark:text-primary-dark mt-1 mr-2"></i><span>Fully responsive to look perfect on any device.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold">A Data-Driven Approach to Development</h2>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300 mt-4">
+                    Our process is transparent and focused on delivering measurable results and a clear return on investment.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg text-center">
+                    <h3 class="text-xl font-bold mb-4">Project Time Allocation</h3>
+                    <canvas id="timeAllocationChart" width="200" height="200"></canvas>
+                </div>
+                <div class="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg text-center">
+                    <h3 class="text-xl font-bold mb-4">Typical Impact on Client Growth</h3>
+                    <canvas id="clientGrowthChart" width="200" height="200"></canvas>
+                </div>
+                <div class="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg text-center">
+                    <h3 class="text-xl font-bold mb-4">Our Development Focus</h3>
+                    <canvas id="focusAreasChart" width="200" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="py-16 md:py-24 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                 <h2 class="text-3xl md:text-4xl font-bold">Our Proven Development Process</h2>
+                 <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300 mt-4">We follow a structured path to ensure your project is a success from start to finish.</p>
+            </div>
+             <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <div class="process-step relative pl-16 pb-12"><div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-primary-light dark:bg-primary-dark flex items-center justify-center text-white font-bold z-10">1</div><h3 class="text-xl font-bold mb-3">Discovery & Strategy</h3><p class="text-gray-600 dark:text-gray-300">We start by understanding your business, goals, and audience to create a comprehensive project blueprint.</p></div>
+                    <div class="process-step relative pl-16 pb-12"><div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-secondary-light dark:bg-secondary-dark flex items-center justify-center text-white font-bold z-10">2</div><h3 class="text-xl font-bold mb-3">UI/UX Design</h3><p class="text-gray-600 dark:text-gray-300">Our team creates intuitive wireframes and stunning visual designs that are focused on user experience.</p></div>
+                    <div class="process-step relative pl-16 pb-12"><div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold z-10">3</div><h3 class="text-xl font-bold mb-3">Development</h3><p class="text-gray-600 dark:text-gray-300">We write clean, efficient, and scalable code using the latest technologies to bring the designs to life.</p></div>
+                    <div class="process-step relative pl-16"><div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold z-10">4</div><h3 class="text-xl font-bold mb-3">Launch & Support</h3><p class="text-gray-600 dark:text-gray-300">After rigorous testing, we deploy your website and provide ongoing support to ensure its success.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="py-16 md:py-24 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold">The Technologies We Use</h2>
+                <p class="text-gray-600 dark:text-gray-300 mt-2">We leverage a modern tech stack to build robust and scalable solutions.</p>
+            </div>
+            <div class="flex flex-wrap justify-center items-center gap-x-8 gap-y-6 md:gap-x-16">
+                 <div class="flex items-center text-xl font-medium opacity-80 hover:opacity-100 transition"><i class="fab fa-react text-blue-500 text-4xl mr-3"></i><span>React / Next.js</span></div>
+                 <div class="flex items-center text-xl font-medium opacity-80 hover:opacity-100 transition"><i class="fab fa-node-js text-green-600 text-4xl mr-3"></i><span>Node.js</span></div>
+                 <div class="flex items-center text-xl font-medium opacity-80 hover:opacity-100 transition"><i class="fab fa-wordpress text-blue-700 text-4xl mr-3"></i><span>WordPress</span></div>
+                 <div class="flex items-center text-xl font-medium opacity-80 hover:opacity-100 transition"><i class="fab fa-shopify text-green-400 text-4xl mr-3"></i><span>Shopify</span></div>
+                 <div class="flex items-center text-xl font-medium opacity-80 hover:opacity-100 transition"><i class="fab fa-figma text-purple-500 text-4xl mr-3"></i><span>Figma</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-primary-light dark:bg-primary-dark text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Build Your New Website?</h2>
+            <p class="max-w-2xl mx-auto text-lg mb-8 opacity-90">
+                Let's discuss your project. Contact us today for a free, no-obligation consultation and quote.
+            </p>
+            <a href="/contact.html" class="bg-white text-primary-light dark:text-primary-dark px-6 py-3 rounded-md hover:opacity-90 transition font-medium">
+                Get a Free Quote
+            </a>
+        </div>
+    </section>
+
+        </main>
+    
+        <!-- Footer Section -->
+    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">AMpire Studio</h3>
+                    <p class="mb-4">
+                        We help businesses establish, enhance, and grow their digital presence through strategic design and development solutions.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/services.html" class="hover:text-white transition">Web Design & Development</a></li>
+                        <li><a href="/services.html#ecommerce" class="hover:text-white transition">E-Commerce Solutions</a></li>
+                        <li><a href="/services.html#branding" class="hover:text-white transition">Branding & Graphic Design</a></li>
+                        <li><a href="/services.html#social" class="hover:text-white transition">Social Media Management</a></li>
+                        <li><a href="/services.html#seo" class="hover:text-white transition">SEO & Digital Marketing</a></li>
+                        <li><a href="/services.html#mobile" class="hover:text-white transition">Mobile App Development</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/index.html" class="hover:text-white transition">Home</a></li>
+                        <li><a href="/services.html" class="hover:text-white transition">Services</a></li>
+                        <li><a href="/about-us.html" class="hover:text-white transition">About Us</a></li>
+                        <li><a href="/portfolio.html" class="hover:text-white transition">Portfolio</a></li>
+                        <li><a href="/contact.html" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>123 Digital Avenue, Tech City, TC 10001</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3"></i>
+                            <span>contact@ampirestudio.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-3"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock mt-1 mr-3"></i>
+                            <span>Mon-Fri: 9AM - 6PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2025 AMpire Studio. All rights reserved.</p>
+                <div class="mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition mr-4">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition mr-4">Terms of Service</a>
+                    <a href="/articles.html" class="hover:text-white transition">Articles</a> </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Check for saved user preference or use system preference
+        if (localStorage.getItem('color-theme') === 'dark' || (!localStorage.getItem('color-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('color-theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+        
+        // FAQ Toggle
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+        
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // Offset for fixed header
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // Form submission (if a contact form exists on the page)
+        const contactForm = document.getElementById('contact-form');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData);
+                
+                // Here you would typically send the data to your server
+                console.log('Form submitted:', data);
+                
+                // Show success message
+                alert('Thank you for your message! We will get back to you soon.');
+                this.reset();
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+    // Determine chart colors based on theme
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    const primaryColor = isDarkMode ? '#818cf8' : '#6366f1';
+    const secondaryColor = isDarkMode ? '#fb7185' : '#f43f5e';
+    const purpleColor = '#a855f7';
+    const greenColor = '#22c55e';
+    const textColor = isDarkMode ? '#e5e7eb' : '#374151';
+
+    const chartOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                    color: textColor,
+                    font: {
+                        family: "'Inter', sans-serif",
+                        size: 14,
+                    }
+                }
+            }
+        }
+    };
+
+    // Chart 1: Time Allocation
+    const timeCtx = document.getElementById('timeAllocationChart');
+    if (timeCtx) {
+        new Chart(timeCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Design (UI/UX)', 'Development', 'Strategy', 'Testing'],
+                datasets: [{
+                    label: 'Time Allocation',
+                    data: [30, 45, 15, 10],
+                    backgroundColor: [primaryColor, secondaryColor, purpleColor, greenColor],
+                    borderColor: isDarkMode ? '#111827' : '#f9fafb', // Match section bg
+                    borderWidth: 4
+                }]
+            },
+            options: chartOptions
+        });
+    }
+
+    // Chart 2: Client Growth
+    const growthCtx = document.getElementById('clientGrowthChart');
+    if (growthCtx) {
+        new Chart(growthCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Increased Leads', 'Higher Engagement', 'Better Conversion'],
+                datasets: [{
+                    label: 'Client Growth',
+                    data: [45, 35, 20],
+                    backgroundColor: [primaryColor, secondaryColor, purpleColor],
+                    borderColor: isDarkMode ? '#111827' : '#f9fafb',
+                    borderWidth: 4
+                }]
+            },
+            options: chartOptions
+        });
+    }
+    
+    // Chart 3: Focus Areas
+    const focusCtx = document.getElementById('focusAreasChart');
+    if(focusCtx) {
+        new Chart(focusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['User Experience', 'Performance', 'Security', 'Scalability'],
+                datasets: [{
+                    label: 'Development Focus',
+                    data: [40, 30, 15, 15],
+                    backgroundColor: [primaryColor, secondaryColor, purpleColor, greenColor],
+                    borderColor: isDarkMode ? '#111827' : '#f9fafb',
+                    borderWidth: 4
+                }]
+            },
+            options: chartOptions
+        });
+    }
+});
+    </script>
+</body>
+</html>

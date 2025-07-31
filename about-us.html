@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMpire Studio | Page Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#6366f1',
+                            dark: '#818cf8'
+                        },
+                        secondary: {
+                            light: '#f43f5e',
+                            dark: '#fb7185'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(90deg, #6366f1, #f43f5e);
+        }
+        
+        .dark .gradient-text {
+            background-image: linear-gradient(90deg, #818cf8, #fb7185);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .service-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.05);
+        }
+        
+        .process-step::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: #e5e7eb;
+            left: 24px;
+            top: 40px;
+            z-index: 0;
+        }
+        
+        .dark .process-step::before {
+            background: #4b5563;
+        }
+        
+        @media (max-width: 768px) {
+            .process-step::before {
+                display: none;
+            }
+        }
+        
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .portfolio-item {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .portfolio-overlay {
+            transition: all 0.3s ease;
+            opacity: 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .dark .portfolio-overlay {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+
+    <header class="fixed w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/index.html" class="flex items-center">
+                    <span class="text-2xl font-bold gradient-text">AMpire</span>
+                    <span class="ml-1 text-xl font-semibold dark:text-white">Studio</span>
+                </a>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="/index.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Home</a>
+                <a href="/services.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Services</a>
+                <a href="/about-us.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">About Us</a>
+                <a href="/portfolio.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Portfolio</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+                <a href="/contact.html" class="hidden md:block bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-md hover:opacity-90 transition font-medium">
+                    Get Started
+                </a>
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg rounded-b-lg">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/index.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Home</a>
+                <a href="/services.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Services</a>
+                <a href="/about-us.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">About Us</a>
+                <a href="/portfolio.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Portfolio</a>
+                <a href="/contact.html" class="bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-md hover:opacity-90 transition font-medium text-center">
+                    Get Started
+                </a>
+            </div>
+        </div>
+    </header>
+
+     <section id="about-hero" class="bg-gray-100 dark:bg-gray-800 pt-32 pb-16 md:pt-40 md:pb-24">
+        <div class="container mx-auto px-4 text-center">
+            <span class="font-semibold text-primary-light dark:text-primary-dark">ABOUT US</span>
+            <h1 class="text-4xl md:text-5xl font-bold mt-2">We're The Partner For Your Digital Journey</h1>
+        </div>
+    </section>
+
+    <!-- Mission Section -->                
+    <section id="mission" class="py-16 md:py-24 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Team collaborating on a project" class="rounded-lg shadow-lg w-full h-auto">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Mission is to Empower Your Vision.</h2>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        AMpire Studio was founded on the belief that every great idea, whether from a solo freelancer or an established enterprise, deserves a world-class digital platform. We exist to close the gap between ambition and reality.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        We provide stunning design and robust development at fair prices to give startups a fighting chance, while also offering the deep expertise and premium quality that larger businesses need to innovate and lead their industries.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->                                                                                          
+    <section id="stats" class="bg-gray-100 dark:bg-gray-800 py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">Proven Success, Tangible Results</h2>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300 mt-2">We are proud of our track record in helping businesses grow and succeed.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                <div class="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-md">
+                    <h3 class="text-5xl font-bold gradient-text">50+</h3>
+                    <p class="mt-2 font-semibold text-lg">Happy Clients</p>
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-md">
+                    <h3 class="text-5xl font-bold gradient-text">80+</h3>
+                    <p class="mt-2 font-semibold text-lg">Projects Delivered</p>
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-md">
+                    <h3 class="text-5xl font-bold gradient-text">5k+</h3>
+                    <p class="mt-2 font-semibold text-lg">Hours of Work</p>
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-md">
+                    <h3 class="text-5xl font-bold gradient-text">100%</h3>
+                    <p class="mt-2 font-semibold text-lg">Client Satisfaction</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="relative bg-fixed bg-cover bg-center py-20 md:py-32" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80');">
+        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="relative container mx-auto px-4 text-center text-white">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Have a Project in Mind?</h2>
+            <p class="max-w-2xl mx-auto text-lg mb-8">
+                Let's talk about how we can work together to create something amazing.
+            </p>
+            <a href="/contact.html" class="bg-primary-light text-white px-8 py-3 rounded-md hover:opacity-90 transition font-medium text-lg">
+                Get a Free Consultation
+            </a>
+        </div>
+    </section>
+   
+    <!-- Why Choose Us Section -->
+    <section id="why-us" class="py-16 md:py-24 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-primary-light dark:text-primary-dark font-semibold">WHY CHOOSE US</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4">The AMpire Studio Advantage</h2>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    We don't just deliver projects - we build partnerships that drive real business results.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-primary-light/10 dark:bg-primary-dark/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-medal text-primary-light dark:text-primary-dark text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Proven Expertise</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Our team combines years of experience with cutting-edge technologies to deliver exceptional results.
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-secondary-light/10 dark:bg-secondary-dark/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-hand-holding-usd text-secondary-light dark:text-secondary-dark text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Transparent Pricing</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        No hidden fees. We offer competitive rates with clear breakdowns of what you're paying for.
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-headset text-purple-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Dedicated Support</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        We provide ongoing support and maintenance to ensure your digital assets remain optimal.
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-bolt text-green-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Fast Turnaround</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        We respect your time with efficient processes that deliver quality results without unnecessary delays.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 p-8 md:p-12">
+                        <h3 class="text-2xl font-bold mb-4">Our Commitment to Excellence</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            At AMpire Studio, we approach every project with the same level of dedication and professionalism, whether it's a small business website or a complex enterprise application.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="w-8 h-8 bg-primary-light/10 dark:bg-primary-dark/10 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-primary-light dark:text-primary-dark"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-medium">Strategic Approach</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        We analyze your business objectives to create solutions that align with your goals.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="w-8 h-8 bg-primary-light/10 dark:bg-primary-dark/10 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-primary-light dark:text-primary-dark"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-medium">Quality Assurance</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        Rigorous testing ensures flawless performance across all devices and platforms.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="w-8 h-8 bg-primary-light/10 dark:bg-primary-dark/10 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-primary-light dark:text-primary-dark"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-medium">Client-Centric Process</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        Regular updates and collaboration ensure the final product exceeds expectations.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 bg-gray-50 dark:bg-gray-700 p-8 md:p-12">
+                        <h3 class="text-2xl font-bold mb-4">Technologies We Master</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            We stay at the forefront of technology to deliver modern, scalable solutions for our clients.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                                <i class="fab fa-react text-blue-500 text-2xl mr-3"></i>
+                                <span>React/Next.js</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                                <i class="fab fa-node-js text-green-600 text-2xl mr-3"></i>
+                                <span>Node.js</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                                <i class="fab fa-wordpress text-blue-700 text-2xl mr-3"></i>
+                                <span>WordPress</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                                <i class="fab fa-shopify text-green-400 text-2xl mr-3"></i>
+                                <span>Shopify</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                                <i class="fab fa-php text-purple-500 text-2xl mr-3"></i>
+                                <span>PHP/Laravel</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                                <i class="fas fa-database text-yellow-500 text-2xl mr-3"></i>
+                                <span>MySQL/MongoDB</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                                <i class="fab fa-aws text-orange-500 text-2xl mr-3"></i>
+                                <span>AWS</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                                <i class="fab fa-google text-blue-500 text-2xl mr-3"></i>
+                                <span>Google Cloud</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-primary-light dark:text-primary-dark font-semibold">OUR PROCESS</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4">How We Bring Your Vision to Life</h2>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Our structured approach ensures efficiency, transparency, and outstanding results at every stage.
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <!-- Process Step 1 -->
+                    <div class="process-step relative pl-16 pb-12">
+                        <div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-primary-light dark:bg-primary-dark flex items-center justify-center text-white font-bold z-10">
+                            1
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Discovery & Consultation</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            We start by understanding your business, goals, and requirements through detailed discussions and research.
+                        </p>
+                    </div>
+                    
+                    <!-- Process Step 2 -->
+                    <div class="process-step relative pl-16 pb-12">
+                        <div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-secondary-light dark:bg-secondary-dark flex items-center justify-center text-white font-bold z-10">
+                            2
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Planning & Strategy</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Our team creates a comprehensive project plan with timelines, milestones, and technology stack recommendations.
+                        </p>
+                    </div>
+                    
+                    <!-- Process Step 3 -->
+                    <div class="process-step relative pl-16 pb-12">
+                        <div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold z-10">
+                            3
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Design & Prototyping</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            We develop wireframes and design mockups for your approval before any development begins.
+                        </p>
+                    </div>
+                    
+                    <!-- Process Step 4 -->
+                    <div class="process-step relative pl-16 pb-12">
+                        <div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold z-10">
+                            4
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Development</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Our developers build your solution with clean, efficient code following industry best practices.
+                        </p>
+                    </div>
+                    
+                    <!-- Process Step 5 -->
+                    <div class="process-step relative pl-16 pb-12">
+                        <div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold z-10">
+                            5
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Testing & Quality Assurance</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            We rigorously test all functionality across devices and browsers to ensure flawless performance.
+                        </p>
+                    </div>
+                    
+                    <!-- Process Step 6 -->
+                    <div class="process-step relative pl-16">
+                        <div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold z-10">
+                            6
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Launch & Support</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            We deploy your solution and provide training plus ongoing support to ensure long-term success.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+       <!-- Testimonials Section -->
+    <section class="py-16 md:py-24 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-primary-light dark:text-primary-dark font-semibold">CLIENT TESTIMONIALS</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4">What Our Clients Say</h2>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Don't just take our word for it - hear from businesses we've helped transform.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card bg-white dark:bg-gray-900 rounded-xl shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Sarah Johnson" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Sarah Johnson</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">CEO, Luxe Fashion</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-2">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        "AMpire Studio transformed our online presence with a stunning Shopify store that increased our conversions by 40%. Their attention to detail and strategic approach made all the difference."
+                    </p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card bg-white dark:bg-gray-900 rounded-xl shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Michael Chen</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">CTO, FinTech Solutions</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-2">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        "The custom dashboard AMpire built for us using Next.js has become indispensable to our operations. Their technical expertise and problem-solving skills are truly impressive."
+                    </p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card bg-white dark:bg-gray-900 rounded-xl shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Emily Rodriguez" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Emily Rodriguez</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Marketing Director, Café Artisan</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-2">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        "From our logo to packaging and social media graphics, AMpire created a cohesive brand identity that perfectly captures our café's essence. Our customer engagement has skyrocketed!"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 md:py-24 bg-primary-light dark:bg-primary-dark text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Digital Presence?</h2>
+            <p class="max-w-2xl mx-auto text-lg mb-8 opacity-90">
+                Let's discuss how we can help your business stand out online. Schedule a free consultation today.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="/contact.html" class="bg-white text-primary-light dark:text-primary-dark px-6 py-3 rounded-md hover:opacity-90 transition font-medium">
+                    Get Started Now
+                </a>
+                <a href="tel:+15551234567" class="border border-white px-6 py-3 rounded-md hover:bg-white/10 transition font-medium">
+                    <i class="fas fa-phone-alt mr-2"></i> Call Us
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">AMpire Studio</h3>
+                    <p class="mb-4">
+                        We help businesses establish, enhance, and grow their digital presence through strategic design and development solutions.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/services.html" class="hover:text-white transition">Web Design & Development</a></li>
+                        <li><a href="/services.html#ecommerce" class="hover:text-white transition">E-Commerce Solutions</a></li>
+                        <li><a href="/services.html#branding" class="hover:text-white transition">Branding & Graphic Design</a></li>
+                        <li><a href="/services.html#social" class="hover:text-white transition">Social Media Management</a></li>
+                        <li><a href="/services.html#seo" class="hover:text-white transition">SEO & Digital Marketing</a></li>
+                        <li><a href="/services.html#mobile" class="hover:text-white transition">Mobile App Development</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/index.html" class="hover:text-white transition">Home</a></li>
+                        <li><a href="/services.html" class="hover:text-white transition">Services</a></li>
+                        <li><a href="/about-us.html" class="hover:text-white transition">About Us</a></li>
+                        <li><a href="/portfolio.html" class="hover:text-white transition">Portfolio</a></li>
+                        <li><a href="/contact.html" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>123 Digital Avenue, Tech City, TC 10001</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3"></i>
+                            <span>contact@ampirestudio.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-3"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock mt-1 mr-3"></i>
+                            <span>Mon-Fri: 9AM - 6PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2025 AMpire Studio. All rights reserved.</p>
+                <div class="mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition mr-4">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition mr-4">Terms of Service</a>
+                    <a href="/articles.html" class="hover:text-white transition">Articles</a> </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Check for saved user preference or use system preference
+        if (localStorage.getItem('color-theme') === 'dark' || (!localStorage.getItem('color-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('color-theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+        
+        // FAQ Toggle
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+        
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // Offset for fixed header
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // Form submission (if a contact form exists on the page)
+        const contactForm = document.getElementById('contact-form');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData);
+                
+                // Here you would typically send the data to your server
+                console.log('Form submitted:', data);
+                
+                // Show success message
+                alert('Thank you for your message! We will get back to you soon.');
+                this.reset();
+            });
+        }
+    </script>
+</body>
+</html>

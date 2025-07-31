@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMpire Studio | Page Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#6366f1',
+                            dark: '#818cf8'
+                        },
+                        secondary: {
+                            light: '#f43f5e',
+                            dark: '#fb7185'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(90deg, #6366f1, #f43f5e);
+        }
+        
+        .dark .gradient-text {
+            background-image: linear-gradient(90deg, #818cf8, #fb7185);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .service-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.05);
+        }
+        
+        .process-step::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: #e5e7eb;
+            left: 24px;
+            top: 40px;
+            z-index: 0;
+        }
+        
+        .dark .process-step::before {
+            background: #4b5563;
+        }
+        
+        @media (max-width: 768px) {
+            .process-step::before {
+                display: none;
+            }
+        }
+        
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .portfolio-item {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .portfolio-overlay {
+            transition: all 0.3s ease;
+            opacity: 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .dark .portfolio-overlay {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+          /* Styles for filter buttons */
+    .filter-btn.active-filter {
+        background-color: #6366f1; /* primary-light */
+        color: white;
+    }
+    .dark .filter-btn.active-filter {
+        background-color: #818cf8; /* primary-dark */
+    }
+    .filter-btn:not(.active-filter) {
+        background-color: #e5e7eb; /* gray-200 */
+        color: #374151; /* gray-700 */
+    }
+    .dark .filter-btn:not(.active-filter) {
+        background-color: #374151; /* gray-700 */
+        color: #d1d5db; /* gray-300 */
+    }
+
+    /* Animation for portfolio items appearing */
+    @keyframes itemFadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .portfolio-item-wrapper {
+        animation: itemFadeIn 0.5s ease-in-out forwards;
+    }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+
+    <header class="fixed w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/index.html" class="flex items-center">
+                    <span class="text-2xl font-bold gradient-text">AMpire</span>
+                    <span class="ml-1 text-xl font-semibold dark:text-white">Studio</span>
+                </a>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="/index.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Home</a>
+                <a href="/services.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Services</a>
+                <a href="/about-us.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">About Us</a>
+                <a href="/portfolio.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Portfolio</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+                <a href="/contact.html" class="hidden md:block bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-md hover:opacity-90 transition font-medium">
+                    Get Started
+                </a>
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg rounded-b-lg">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/index.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Home</a>
+                <a href="/services.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Services</a>
+                <a href="/about-us.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">About Us</a>
+                <a href="/portfolio.html" class="font-medium hover:text-primary-light dark:hover:text-primary-dark transition">Portfolio</a>
+                <a href="/contact.html" class="bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded-md hover:opacity-90 transition font-medium text-center">
+                    Get Started
+                </a>
+            </div>
+        </div>
+    </header>
+    <main>
+
+<section id="portfolio-gallery" class="py-16 md:py-24 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold">Our Recent Work</h2>
+            <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300 mt-4">
+                Explore a selection of our projects. Use the filters to find work relevant to your needs.
+            </p>
+        </div>
+
+        <div id="filter-buttons" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-12">
+            <button class="filter-btn active-filter px-4 py-2 font-medium rounded-md transition" data-filter="all">All</button>
+            <button class="filter-btn px-4 py-2 font-medium rounded-md transition" data-filter="web">Web Design</button>
+            <button class="filter-btn px-4 py-2 font-medium rounded-md transition" data-filter="ecommerce">E-Commerce</button>
+            <button class="filter-btn px-4 py-2 font-medium rounded-md transition" data-filter="branding">Branding</button>
+            <button class="filter-btn px-4 py-2 font-medium rounded-md transition" data-filter="marketing">Marketing</button>
+        </div>
+
+        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <a href="project.html" class="portfolio-item-wrapper" data-category="web">
+                <div class="portfolio-item relative rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1136&q=80" alt="Project Image" class="w-full h-64 object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">Zenith Corporate Site</h3>
+                        <p class="text-gray-200 mb-4 text-sm">A sleek, modern website for a financial tech leader.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Web Design</span>
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Next.js</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="project.html" class="portfolio-item-wrapper" data-category="ecommerce">
+                <div class="portfolio-item relative rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project Image" class="w-full h-64 object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">Artisan Goods E-Shop</h3>
+                        <p class="text-gray-200 mb-4 text-sm">A beautiful Shopify store for handcrafted products.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">E-Commerce</span>
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Shopify</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="project.html" class="portfolio-item-wrapper" data-category="branding">
+                <div class="portfolio-item relative rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Project Image" class="w-full h-64 object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">Datalytics Rebrand</h3>
+                        <p class="text-gray-200 mb-4 text-sm">A complete brand identity overhaul for a data startup.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Branding</span>
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Logo</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="project.html" class="portfolio-item-wrapper" data-category="web">
+                <div class="portfolio-item relative rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project Image" class="w-full h-64 object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">Innovate SaaS Platform</h3>
+                        <p class="text-gray-200 mb-4 text-sm">UI/UX design and development for a new tech platform.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Web Design</span>
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">UI/UX</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="project.html" class="portfolio-item-wrapper" data-category="marketing">
+                <div class="portfolio-item relative rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1557863733-2a2a7a45ae94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project Image" class="w-full h-64 object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">Growth Campaign</h3>
+                        <p class="text-gray-200 mb-4 text-sm">A multi-channel digital marketing campaign.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Marketing</span>
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">SEO</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="project.html" class="portfolio-item-wrapper" data-category="ecommerce">
+                <div class="portfolio-item relative rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1585155933947-f82428575b0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project Image" class="w-full h-64 object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">Luxe Fashion Store</h3>
+                        <p class="text-gray-200 mb-4 text-sm">High-end e-commerce experience with custom filters.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">E-Commerce</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="project.html" class="portfolio-item-wrapper" data-category="branding">
+                <div class="portfolio-item relative rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1596704017254-97c112510b86?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project Image" class="w-full h-64 object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">Coffee Co. Branding</h3>
+                        <p class="text-gray-200 mb-4 text-sm">Full branding package for an artisanal coffee roaster.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Branding</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="project.html" class="portfolio-item-wrapper" data-category="web">
+                <div class="portfolio-item relative rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Project Image" class="w-full h-64 object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">Photographer's Portfolio</h3>
+                        <p class="text-gray-200 mb-4 text-sm">A minimal and elegant portfolio site for a creative.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Web Design</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="project.html" class="portfolio-item-wrapper" data-category="ecommerce">
+                <div class="portfolio-item relative rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project Image" class="w-full h-64 object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">Gadget Store</h3>
+                        <p class="text-gray-200 mb-4 text-sm">A user-friendly WooCommerce store for tech gadgets.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">E-Commerce</span>
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">WordPress</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+             <a href="project.html" class="portfolio-item-wrapper" data-category="marketing">
+                <div class="portfolio-item relative rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1520182103734-7a21b3a13a75?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project Image" class="w-full h-64 object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+                        <h3 class="text-white text-xl font-bold mb-2">Local Biz SEO</h3>
+                        <p class="text-gray-200 mb-4 text-sm">SEO strategy to boost local search rankings.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Marketing</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="text-center mt-12">
+            <button id="load-more-btn" class="bg-primary-light dark:bg-primary-dark text-white px-6 py-3 rounded-md hover:opacity-90 transition font-medium">
+                Load More
+            </button>
+        </div>
+    </div>
+</section>
+
+       <!-- Testimonials Section -->
+    <section class="py-16 md:py-24 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-primary-light dark:text-primary-dark font-semibold">CLIENT TESTIMONIALS</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4">What Our Clients Say</h2>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+                    Don't just take our word for it - hear from businesses we've helped transform.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card bg-white dark:bg-gray-900 rounded-xl shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Sarah Johnson" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Sarah Johnson</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">CEO, Luxe Fashion</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-2">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        "AMpire Studio transformed our online presence with a stunning Shopify store that increased our conversions by 40%. Their attention to detail and strategic approach made all the difference."
+                    </p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card bg-white dark:bg-gray-900 rounded-xl shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Michael Chen</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">CTO, FinTech Solutions</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-2">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        "The custom dashboard AMpire built for us using Next.js has become indispensable to our operations. Their technical expertise and problem-solving skills are truly impressive."
+                    </p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card bg-white dark:bg-gray-900 rounded-xl shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Emily Rodriguez" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Emily Rodriguez</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Marketing Director, Café Artisan</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-2">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        "From our logo to packaging and social media graphics, AMpire created a cohesive brand identity that perfectly captures our café's essence. Our customer engagement has skyrocketed!"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA Section -->
+    <section class="py-16 md:py-24 bg-primary-light dark:bg-primary-dark text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Digital Presence?</h2>
+            <p class="max-w-2xl mx-auto text-lg mb-8 opacity-90">
+                Let's discuss how we can help your business stand out online. Schedule a free consultation today.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="/contact.html" class="bg-white text-primary-light dark:text-primary-dark px-6 py-3 rounded-md hover:opacity-90 transition font-medium">
+                    Get Started Now
+                </a>
+                <a href="tel:+15551234567" class="border border-white px-6 py-3 rounded-md hover:bg-white/10 transition font-medium">
+                    <i class="fas fa-phone-alt mr-2"></i> Call Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+        </main>
+    
+    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">AMpire Studio</h3>
+                    <p class="mb-4">
+                        We help businesses establish, enhance, and grow their digital presence through strategic design and development solutions.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/services.html" class="hover:text-white transition">Web Design & Development</a></li>
+                        <li><a href="/services.html#ecommerce" class="hover:text-white transition">E-Commerce Solutions</a></li>
+                        <li><a href="/services.html#branding" class="hover:text-white transition">Branding & Graphic Design</a></li>
+                        <li><a href="/services.html#social" class="hover:text-white transition">Social Media Management</a></li>
+                        <li><a href="/services.html#seo" class="hover:text-white transition">SEO & Digital Marketing</a></li>
+                        <li><a href="/services.html#mobile" class="hover:text-white transition">Mobile App Development</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/index.html" class="hover:text-white transition">Home</a></li>
+                        <li><a href="/services.html" class="hover:text-white transition">Services</a></li>
+                        <li><a href="/about-us.html" class="hover:text-white transition">About Us</a></li>
+                        <li><a href="/portfolio.html" class="hover:text-white transition">Portfolio</a></li>
+                        <li><a href="/contact.html" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white text-xl font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>123 Digital Avenue, Tech City, TC 10001</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3"></i>
+                            <span>contact@ampirestudio.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-3"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock mt-1 mr-3"></i>
+                            <span>Mon-Fri: 9AM - 6PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2025 AMpire Studio. All rights reserved.</p>
+                <div class="mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition mr-4">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition mr-4">Terms of Service</a>
+                    <a href="/articles.html" class="hover:text-white transition">Articles</a> </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Check for saved user preference or use system preference
+        if (localStorage.getItem('color-theme') === 'dark' || (!localStorage.getItem('color-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('color-theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+        
+        // FAQ Toggle
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+        
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // Offset for fixed header
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // Form submission (if a contact form exists on the page)
+        const contactForm = document.getElementById('contact-form');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData);
+                
+                // Here you would typically send the data to your server
+                console.log('Form submitted:', data);
+                
+                // Show success message
+                alert('Thank you for your message! We will get back to you soon.');
+                this.reset();
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const portfolioGrid = document.getElementById('portfolio-grid');
+    const allItems = Array.from(portfolioGrid.children);
+    const loadMoreBtn = document.getElementById('load-more-btn');
+
+    const itemsToShowInitially = 6;
+    let currentFilter = 'all';
+    let visibleItems = [];
+
+    // Function to display items based on filter and pagination
+    function displayItems() {
+        // First, get all items that match the current filter
+        const filteredItems = currentFilter === 'all'
+            ? allItems
+            : allItems.filter(item => item.dataset.category === currentFilter);
+
+        // Hide all items in the grid to start fresh
+        allItems.forEach(item => item.classList.add('hidden'));
+
+        // Determine which of the filtered items should be visible
+        visibleItems = filteredItems;
+        const itemsToDisplay = visibleItems.slice(0, itemsToShowInitially);
+        
+        // Show the items
+        itemsToDisplay.forEach(item => item.classList.remove('hidden'));
+        
+        // Update Load More button visibility
+        if (visibleItems.length > itemsToShowInitially) {
+            loadMoreBtn.classList.remove('hidden');
+        } else {
+            loadMoreBtn.classList.add('hidden');
+        }
+    }
+
+    // Handle filter button clicks
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Update active button style
+            filterButtons.forEach(btn => btn.classList.remove('active-filter'));
+            button.classList.add('active-filter');
+
+            // Update current filter and display items
+            currentFilter = button.dataset.filter;
+            displayItems();
+        });
+    });
+
+    // Handle Load More button click
+    loadMoreBtn.addEventListener('click', () => {
+        // Find out how many items are currently visible
+        const currentlyVisibleCount = visibleItems.filter(item => !item.classList.contains('hidden')).length;
+        
+        // Determine the next batch of items to show
+        const nextItems = visibleItems.slice(currentlyVisibleCount, currentlyVisibleCount + itemsToShowInitially);
+        
+        // Show the next batch
+        nextItems.forEach(item => item.classList.remove('hidden'));
+        
+        // Hide the button if no more items to load
+        if (currentlyVisibleCount + nextItems.length >= visibleItems.length) {
+            loadMoreBtn.classList.add('hidden');
+        }
+    });
+
+    // Initial display on page load
+    displayItems();
+});
+    </script>
+</body>
+</html>
